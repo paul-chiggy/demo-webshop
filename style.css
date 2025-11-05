@@ -353,3 +353,10 @@ footer a {
   color: green;
   margin-top: 1rem;
 }
+
+.error-message {
+  display: none;
+  color: #e53935;
+  margin-top: 1rem;
+  font-weight: 600;
+}
