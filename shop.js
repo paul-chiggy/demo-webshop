@@ -2,7 +2,40 @@ const PRODUCTS = {
   apple: { name: "Apple", emoji: "🍏" },
   banana: { name: "Banana", emoji: "🍌" },
   lemon: { name: "Lemon", emoji: "🍋" },
+  strawberry: { name: "Strawberry", emoji: "🍓" },
 };
+
+const PRODUCT_CONFLICTS = {
+  banana: ["strawberry"],
+  strawberry: ["banana"],
+};
+
+const INCOMPATIBLE_ERROR_MESSAGE =
+  "Strawberries and bananas cannot be combined.";
+
+function showBasketError(message) {
+  const errorEl = document.getElementById("basketError");
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.style.display = "block";
+  } else {
+    alert(message);
+  }
+}
+
+function clearBasketError() {
+  const errorEl = document.getElementById("basketError");
+  if (errorEl) {
+    errorEl.textContent = "";
+    errorEl.style.display = "none";
+  }
+}
+
+function isProductCompatible(product, basket) {
+  const conflicts = PRODUCT_CONFLICTS[product];
+  if (!conflicts) return true;
+  return !basket.some((item) => conflicts.includes(item));
+}
 
 function getBasket() {
   try {
@@ -18,12 +51,19 @@ function getBasket() {
 
 function addToBasket(product) {
   const basket = getBasket();
+  if (!isProductCompatible(product, basket)) {
+    showBasketError(INCOMPATIBLE_ERROR_MESSAGE);
+    return false;
+  }
   basket.push(product);
   localStorage.setItem("basket", JSON.stringify(basket));
+  clearBasketError();
+  return true;
 }
 
 function clearBasket() {
   localStorage.removeItem("basket");
+  clearBasketError();
 }
 
 function renderBasket() {
@@ -66,18 +106,17 @@ function renderBasketIndicator() {
   }
 }
 
-// Call this on page load and after basket changes
 if (document.readyState !== "loading") {
   renderBasketIndicator();
 } else {
   document.addEventListener("DOMContentLoaded", renderBasketIndicator);
 }
 
-// Patch basket functions to update indicator
 const origAddToBasket = window.addToBasket;
 window.addToBasket = function (product) {
-  origAddToBasket(product);
+  const result = origAddToBasket(product);
   renderBasketIndicator();
+  return result;
 };
 const origClearBasket = window.clearBasket;
 window.clearBasket = function () {

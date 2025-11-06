@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fresh Lemon - Fruit Shop</title>
+    <title>Fresh Strawberry - Fruit Shop</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -35,10 +35,12 @@
     </header>
     <main id="main-content" role="main">
       <div class="content-box">
-        <div class="emoji-display" role="img" aria-label="Lemon emoji">🍋</div>
-        <h1>Lemon</h1>
+        <div class="emoji-display" role="img" aria-label="Strawberry emoji">
+          🍓
+        </div>
+        <h1>Strawberry</h1>
         <div class="product-desc" aria-label="Product description">
-          When life gives you lemons, make a website.
+          Sweet, bright, and ready for smoothies—just keep it away from bananas.
         </div>
         <p
           id="basketError"
@@ -50,7 +52,7 @@
           <button
             id="addToBasket"
             class="cart-action-btn"
-            aria-label="Add Lemon to basket"
+            aria-label="Add Strawberry to basket"
           >
             Add to Basket
           </button>
@@ -69,7 +71,7 @@
     <script src="shop.js"></script>
     <script>
       document.getElementById("addToBasket").onclick = function () {
-        addToBasket("lemon");
+        addToBasket("strawberry");
       };
     </script>
   </body>
